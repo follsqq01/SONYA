@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HB!!</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <div class="content">
+          <img class="content__img" src="images/01.png" />
+          <img class="content__img" src="images/02.png" />
+          <img class="content__img" src="images/03.png" />
+          <img class="content__img" src="images/04.png" />
+          <img class="content__img" src="images/05.png" />
+                    <img class="content__img" src="images/14.png" />
+                                        <img class="content__img" src="images/15.png" />
+          <img class="content__img" src="images/06.png" />
+          <img class="content__img" src="images/07.png" />
+          <img class="content__img" src="images/08.png" />
+          <img class="content__img" src="images/09.png" />
+                    <img class="content__img" src="images/10.png" />
+                                        <img class="content__img" src="images/12.png" />
+          <img class="content__img" src="images/13.png" />
+                                        <img class="content__img" src="images/11.png" />
+        </div>
+      </main>
+      <!-- nav -->
+      <nav>
+        <div class="nav-logo">
+          <div class="nav-link">
+            <a href="index.html">HB!!</a>
+          </div>
+        </div>
+        <div class="nav-links">
+          <div class="nav-link">
+            <a href="ruslan.html">Саша</a>
+          </div>
+            <div class="nav-link">
+            <a href="ruslan.html">Рус</a>
+          </div>
+      <div class="nav-link">
+            <a href="margo.html">Марго</a>
+          </div>
+          <div class="nav-link">
+            <a href="nu.html">Нюта</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- header -->
+      <header>
+        <p id="name">Happy nineteen</p>
+        <p>Cпасибо, что ты у нас есть!!</p>
+        <p>С Днём Рождения, Сонечка!!</p>
+        <br>
+      </header>
+
+      <!-- footer -->
+
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- Кнопка для конфетти -->
+<audio id="bgMusic" loop>
+  <source src="audio/ououou.mp3" type="audio/mpeg">
+  Ваш браузер не поддерживает аудио.
+</audio>
+
+<script>
+const music = document.getElementById('bgMusic');
+
+// пытаемся запустить сразу
+music.play().catch(() => {
+  // если браузер заблокировал autoplay, запускаем при первом клике
+  const startMusic = () => {
+    music.play();
+    window.removeEventListener('click', startMusic);
+  }
+  window.addEventListener('click', startMusic);
+});
+</script>
+<script>
+const colors = ['#ff4b4b', '#ffd93b', '#4bff6f', '#3bd9ff', '#ff3bd9', '#ffffff'];
+
+// создаём canvas один раз
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+canvas.style.position = 'fixed';
+canvas.style.top = 0;
+canvas.style.left = 0;
+canvas.style.pointerEvents = 'none';
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const ctx = canvas.getContext('2d');
+
+let confetti = [];
+
+// функция для взрыва
+function explodeConfetti() {
+  for (let i = 0; i < 300; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = Math.random() * 10 + 5;
+    confetti.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      r: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      gravity: 0.3 + Math.random() * 0.1,
+      rotation: Math.random() * 2 * Math.PI,
+      rotationSpeed: (Math.random() - 0.5) * 0.2,
+      lifetime: 0
+    });
+  }
+}
+
+// функция для дождя конфетти
+function addFallingConfetti() {
+  const x = Math.random() * canvas.width;
+  const y = -10;
+  const r = Math.random() * 6 + 3;
+  confetti.push({
+    x, y,
+    vx: 0,
+    vy: Math.random() * 3 + 2,
+    r,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    gravity: 0,
+    rotation: Math.random() * 2 * Math.PI,
+    rotationSpeed: (Math.random() - 0.5) * 0.05,
+    lifetime: 0
+  });
+}
+
+// рисуем все конфетти
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  confetti.forEach(c => {
+    ctx.save();
+    ctx.translate(c.x, c.y);
+    ctx.rotate(c.rotation);
+    ctx.fillStyle = c.color;
+    ctx.fillRect(-c.r/2, -c.r/2, c.r, c.r);
+    ctx.restore();
+  });
+}
+
+// обновляем позиции конфетти
+function update() {
+  confetti.forEach(c => {
+    c.x += c.vx;
+    c.y += c.vy;
+    c.vy += c.gravity;
+    c.rotation += c.rotationSpeed;
+    c.lifetime += 1;
+  });
+
+  // убираем конфетти, которое упало ниже экрана
+  confetti = confetti.filter(c => c.y < canvas.height + 20);
+}
+
+// основной цикл
+function loop() {
+  draw();
+  update();
+  // добавляем новые падающие конфетти
+  for (let i = 0; i < 3; i++) addFallingConfetti();
+  requestAnimationFrame(loop);
+}
+
+// запуск
+window.addEventListener('load', () => {
+  explodeConfetti(); // взрыв при входе
+  loop();            // бесконечный дождь
+});
+
+// кнопка для повторного взрыва
+document.getElementById('confettiBtn').addEventListener('click', explodeConfetti);
+</script>
+
+  </body>
+</html>
