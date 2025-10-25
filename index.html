@@ -162,13 +162,22 @@ function update() {
   // убираем конфетти, которое упало ниже экрана
   confetti = confetti.filter(c => c.y < canvas.height + 20);
 }
+// в функции loop
+function loop() {
+  draw();
+  update();
+  
+  // добавляем новые падающие конфетти с меньшей частотой
+  if (Math.random() < 0.5) addFallingConfetti(); // ~30% шанс за кадр
+  requestAnimationFrame(loop);
+}
 
 // основной цикл
 function loop() {
   draw();
   update();
   // добавляем новые падающие конфетти
-  for (let i = 0; i < 3; i++) addFallingConfetti();
+  for (let i = 0; i < 1; i++) addFallingConfetti();
   requestAnimationFrame(loop);
 }
 
