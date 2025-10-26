@@ -27,7 +27,7 @@ a {
 
 p {
   font-family: "PP Mondwest";
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 main {
@@ -115,7 +115,7 @@ nav .nav-links .nav-link {
 }
 
 nav .nav-logo {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 /* header */
@@ -186,7 +186,7 @@ section.about .about-col p {
   }
 
   section.about .about-col p {
-    font-size: 1rem;
+    font-size: 0.99rem;
     margin-bottom: 1rem;
   }
 }
