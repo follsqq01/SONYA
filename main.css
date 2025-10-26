@@ -174,7 +174,8 @@ section.about {
 
 section.about .about-col p {
   color: var(--colors-background);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -187,7 +188,7 @@ section.about .about-col p {
 
   section.about .about-col p {
     font-size: 0.99rem;
-    margin-bottom: 1rem;
+    padding-top: 2rem;
   }
 }
 
